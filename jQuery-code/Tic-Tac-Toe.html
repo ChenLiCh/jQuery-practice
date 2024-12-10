@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+    <style>
+      table {
+        border: 5px solid black;
+        margin: auto;
+      }
+
+      td {
+        border: 2px solid gray;
+        width: 80px;
+        height: 80px;
+        position: relative;
+      }
+
+      .img {
+        position: relative;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Tic Tac Toe</h1>
+    </header>
+    <h1 id="turn"></h1>
+    <div class="container">
+      <table>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="./jquery-3.7.1.js"></script>
+    <script>
+      let gameDataIsFull = false;
+      const game = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ];
+      let player = "player 1";
+
+      const judge = (arr) => {
+        if (
+          (arr[0][0] != "" &&
+            arr[0][0] == arr[0][1] &&
+            arr[0][1] == arr[0][2]) ||
+          (arr[1][0] != "" &&
+            arr[1][0] == arr[1][1] &&
+            arr[1][1] == arr[1][2]) ||
+          (arr[2][0] != "" &&
+            arr[2][0] == arr[2][1] &&
+            arr[2][1] == arr[2][2]) ||
+          (arr[0][0] != "" &&
+            arr[0][0] == arr[1][0] &&
+            arr[1][0] == arr[2][0]) ||
+          (arr[0][1] != "" &&
+            arr[0][1] == arr[1][1] &&
+            arr[1][1] == arr[2][1]) ||
+          (arr[0][2] != "" &&
+            arr[0][2] == arr[1][2] &&
+            arr[1][2] == arr[2][2]) ||
+          (arr[0][0] != "" &&
+            arr[0][0] == arr[1][1] &&
+            arr[1][1] == arr[2][2]) ||
+          (arr[0][2] != "" && arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0])
+        )
+          return true;
+        else return false;
+      };
+
+      $(function () {
+        $("#turn").text("輪到 " + player);
+        let i = 0,
+          j = 0;
+        $("tr>td").on("click", function () {
+          i = $(this).closest("tr").index();
+          j = $(this).index();
+
+          // 避免重複填
+          if (game[i][j] != "") return false;
+
+          if (player == "player 1") {
+            $(this).append('<img src="./images/O.png" alt="O" class="img">');
+            game[i][j] = "O";
+          } else {
+            $(this).append('<img src="./images/X.png" alt="X" class="img">');
+            game[i][j] = "X";
+          }
+
+          gameDataIsFull = true;
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+              if (game[i][j] == "") {
+                gameDataIsFull = false;
+                break;
+              }
+            }
+          }
+
+          if (judge(game)) {
+            setTimeout(() => {
+              alert(`${player} win`);
+              location.reload();
+            }, 100);
+          } else {
+            if (gameDataIsFull) {
+              setTimeout(() => {
+                alert("平手");
+                location.reload();
+              }, 100);
+            }
+            if (player == "player 1") player = "player 2";
+            else player = "player 1";
+          }
+
+          $("#turn").text("輪到 " + player);
+        });
+      });
+    </script>
+  </body>
+</html>
