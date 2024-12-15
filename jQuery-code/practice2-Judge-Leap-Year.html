@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Judge-Leap-Year</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Judge-Leap-Year</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <div>請輸入西元年份<input type="text" id="year" /></div>
+      <span id="result"></span>
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        let year = 0;
+
+        $("#year").on("keyup", function (e) {
+          if (isNaN(+$(this).val()) || +$(this).val() == 0) {
+            $(this).val("");
+            $("#result").text("請輸入正整數");
+          } else {
+            year = $(this).val();
+            year % 400 == 0
+              ? $("#result").text("閏年")
+              : year % 100 == 0
+              ? $("#result").text("平年")
+              : year % 4 == 0
+              ? $("#result").text("閏年")
+              : $("#result").text("平年");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

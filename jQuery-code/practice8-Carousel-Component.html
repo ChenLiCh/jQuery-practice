@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel-Component</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+    <style>
+      .carousel {
+        width: 800px;
+        position: relative;
+      }
+
+      #carouselImage {
+        width: 600px;
+        height: 300px;
+        position: relative;
+        left: 100px;
+      }
+
+      #previous {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 125px;
+        left: 0px;
+      }
+
+      #next {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 125px;
+        left: 750px;
+      }
+
+      .progress-bar-container {
+        width: 100px;
+        height: 5px;
+        position: absolute;
+        left: 350px;
+        bottom: 20px;
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.6);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Carousel-Component</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <div class="carousel">
+        <img id="previous" src="./images/previous.png" alt="previous" />
+        <img
+          id="carouselImage"
+          src="https://www.kpopn.com/upload/fa639a8e1ae64ce8f2c0.jpg"
+          alt="Twice Fancy Cover"
+        />
+        <img id="next" src="./images/next.png" alt="next" />
+
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        const data = [
+          {
+            url: "https://www.kpopn.com/upload/fa639a8e1ae64ce8f2c0.jpg",
+            name: "Twice Fancy Cover",
+          },
+          {
+            url: "https://cdn1.wishnote.tw/200/2018/04/24/200_91441_1524554375.jpeg",
+            name: "Twice What is Love MV",
+          },
+          {
+            url: "https://img.ltn.com.tw/Upload/ent/page/800/2021/11/06/phpqJ2lIs.jpg",
+            name: "Twice Formula of Love Cover",
+          },
+          {
+            url: "https://static.popdaily.com.tw/u/202109/4b573e45-9586-41e7-bd5d-c391bbfb2a60.jpg",
+            name: "Twice The Feels Cover",
+          },
+          {
+            url: "https://thebiaslistcom.files.wordpress.com/2024/02/twice-i-got-you.jpeg",
+            name: "Twice I Got You Cover",
+          },
+        ];
+
+        let index = 0;
+
+        setInterval(() => {
+          $(".progress-bar").css("transition", "none");
+          $(".progress-bar").css("width", "0%");
+
+          if (index >= data.length) index = 0;
+          $("#carouselImage").attr("src", data[index].url);
+          $("#carouselImage").attr("alt", data[index].name);
+          index++;
+
+          // 使用 setTimeout(() => {}, 50) 的主要原因是觸發 CSS 轉場動畫 (transition)，避免瀏覽器優化導致動畫無效。
+          // 當 $(".progress-bar").css("width", "0%"); 和 $(".progress-bar").css("width", "100%"); 緊接著執行時，
+          // 瀏覽器會將它們視為同一個 “繪製 (render)” 階段，直接從 0% 跳到 100%，跳過動畫效果。
+          // 這是因為瀏覽器通常會優化樣式的變更，避免中間的轉場操作，尤其當這些操作在同一個執行區間中完成。
+          setTimeout(() => {
+            $(".progress-bar").css("transition", `width 5000ms linear`);
+            $(".progress-bar").css("width", "100%");
+          }, 50);
+        }, 5000);
+
+        $("#previous").on("click", function (e) {
+          $(".progress-bar").css("transition", "none");
+          $(".progress-bar").css("width", "0%");
+
+          index--;
+          if (index < 0) index = 0;
+          $("#carouselImage").attr("src", data[index].url);
+          $("#carouselImage").attr("alt", data[index].name);
+        });
+
+        $("#next").on("click", function (e) {
+          $(".progress-bar").css("transition", "none");
+          $(".progress-bar").css("width", "0%");
+
+          index++;
+          if (index >= data.length) index = data.length - 1;
+          $("#carouselImage").attr("src", data[index].url);
+          $("#carouselImage").attr("alt", data[index].name);
+        });
+      });
+    </script>
+  </body>
+</html>

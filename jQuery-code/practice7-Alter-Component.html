@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alter-Component</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+    <style>
+      .alert {
+        width: 500px;
+        height: 100px;
+        border: 2px solid;
+        border-radius: 10px;
+        margin: 10px;
+      }
+      .alert-question {
+        background-color: rgb(245, 245, 245);
+        border-color: rgb(185, 185, 185);
+      }
+      .alert-question > p {
+        color: rgb(185, 185, 185);
+      }
+      .alert-success {
+        background-color: rgb(204, 255, 221);
+        border-color: rgb(0, 183, 97);
+      }
+      .alert-success > p {
+        color: rgb(0, 183, 97);
+      }
+      .alert-error {
+        background-color: rgb(255, 200, 202);
+        border-color: rgb(255, 29, 62);
+      }
+      .alert-error > p {
+        color: rgb(255, 29, 62);
+      }
+      .alert-warning {
+        background-color: rgb(255, 235, 196);
+        border-color: rgb(255, 179, 56);
+      }
+      .alert-warning > p {
+        color: rgb(255, 179, 56);
+      }
+      p {
+        position: relative;
+        top: 40%;
+        left: 5%;
+        font-size: larger;
+      }
+      button {
+        font-size: x-large;
+        width: 25px;
+        height: 25px;
+        position: relative;
+        top: -20%;
+        left: 93%;
+        background-color: white;
+        border: 1px solid;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Alter-Component</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <div class="alert alert-question">
+        <p>確認是否執行動作訊息。</p>
+        <button class="close">×</button>
+      </div>
+      <hr />
+      <div class="alert alert-success">
+        <p>成功訊息。</p>
+        <button class="close">×</button>
+      </div>
+      <hr />
+      <div class="alert alert-error">
+        <p>錯誤訊息。</p>
+        <button class="close">×</button>
+      </div>
+      <hr />
+      <div class="alert alert-warning">
+        <p>警示訊息。</p>
+        <button class="close">×</button>
+      </div>
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        $("button").on("click", function (e) {
+          $(this).closest("div").remove();
+        });
+      });
+    </script>
+  </body>
+</html>

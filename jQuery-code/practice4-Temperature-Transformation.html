@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature-Transformation</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Temperature-Transformation</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <label for="celsius">攝氏</label>
+      <input type="text" id="celsius" />
+      <label for="fahrenheit">華氏</label>
+      <input type="text" id="fahrenheit" />
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        $("#celsius").on("keyup", function (e) {
+          let c = +$("#celsius").val();
+          let f = (c * 9) / 5 + 32;
+          $("#fahrenheit").val(f);
+        });
+        $("#fahrenheit").on("keyup", function (e) {
+          let f = +$("#fahrenheit").val();
+          let c = ((f - 32) * 5) / 9;
+          $("#celsius").val(c);
+        });
+      });
+    </script>
+  </body>
+</html>

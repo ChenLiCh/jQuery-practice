@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounting-Book</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+    <style>
+      .input {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+      }
+      table {
+        margin-top: 50px;
+        width: 100%;
+        border: 3px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        width: 25%;
+        height: 50px;
+        text-align: center;
+      }
+      tbody > tr:first-child {
+        border-top: 3px solid black;
+      }
+      tbody > tr:nth-child(n + 2) {
+        border-top: 3px dashed black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Accounting-Book</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <div class="input">
+        <div>
+          <label for="date">日期：</label>
+          <input type="date" name="date" id="date" />
+        </div>
+        <div>
+          <label for="item">項目：</label>
+          <input type="text" name="item" id="item" />
+        </div>
+        <div>
+          <label for="money">金額：</label>
+          <input type="text" name="money" id="money" />
+          <button id="add">新增</button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>項目</th>
+            <th>金額</th>
+            <th>刪除</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        $("#add").on("click", function (e) {
+          if (isNaN($("#money").val()) || $("#money").val() == "") {
+            alert("金額請輸入數字");
+            $("#date").text("");
+            $("#item").text("");
+            $("#money").text();
+            return;
+          }
+
+          let date = "",
+            item = "",
+            money = "";
+          date = $("#date").val().replaceAll("-", "/");
+          item = $("#item").val();
+          money = $("#money").val();
+
+          $("tbody").append(`<tr>
+            <td>${date}</td>
+            <td>${item}</td>
+            <td>$${money}元</td>
+            <td><button id="delete">刪除</button></td>
+            </tr>`);
+        });
+
+        $("tbody").on("click", "#delete", function (e) {
+          console.log(this);
+          $(this).closest("tr").remove();
+        });
+      });
+    </script>
+  </body>
+</html>

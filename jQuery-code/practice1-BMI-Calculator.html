@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>BMI Calculator</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <div>
+        身高（公分）
+        <input type="text" id="height" required />
+      </div>
+      <div>
+        體重
+        <input type="text" id="weight" required />
+      </div>
+      <div id="bmi"></div>
+      <button id="compute">計算 BMI</button>
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        let height = 0;
+        let weight = 0;
+        let bmi = 0;
+        $("#compute").on("click", function (e) {
+          height = +$("#height").val();
+          weight = +$("#weight").val();
+          bmi = 0;
+          if (isNaN(height) || isNaN(weight) || height == 0 || weight == 0) {
+            alert("請輸入數字");
+            location.reload();
+          } else {
+            bmi = weight / Math.pow(height / 100, 2);
+
+            bmi < 18.5
+              ? $("#bmi").text("過輕")
+              : bmi < 24
+              ? $("#bmi").text("正常")
+              : bmi < 27
+              ? $("#bmi").text("過重")
+              : bmi < 30
+              ? $("#bmi").text("輕度肥胖")
+              : bmi < 35
+              ? $("#bmi").text("中度肥胖")
+              : $("#bmi").text("重度肥胖");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

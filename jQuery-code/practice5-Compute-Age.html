@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compute-Age</title>
+    <link rel="stylesheet" href="./styles/common.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Compute-Age</h1>
+    </header>
+    <div class="container">
+      <!-- 要寫的內容 -->
+      <label for="birthday">請輸入生日</label>
+      <input type="date" id="birthday" />
+    </div>
+    <!-- 引入jQuery -->
+    <script src="./jquery-3.7.1.js"></script>
+    <!-- 撰寫jQuery -->
+    <script>
+      // 等待DOM TREE產生後執行程式
+      $(function () {
+        // 你的程式碼
+        $("#birthday").on("change", function () {
+          let currentYear = new Date().getFullYear();
+          let birthYear = $("#birthday").val().split("-")[0];
+          let age = currentYear - birthYear;
+          $("#age").remove();
+          $(".container").append(`<span id='age'>您現在 ${age} 歲</span>`);
+        });
+      });
+    </script>
+  </body>
+</html>
